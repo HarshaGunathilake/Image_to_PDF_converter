@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useConverter, type Notice, type SortMode } from "@/hooks/useConverter";
 import { ACCEPT_ATTR, ERROR_MESSAGES } from "@/lib/image/validate";
+import type { PdfSettings as Settings } from "@/lib/pdf/settings";
 import { ConversionProgress } from "./ConversionProgress";
 import { DownloadResult } from "./DownloadResult";
 import { ImageList } from "./ImageList";
@@ -41,7 +42,15 @@ function fileNameFor(timestamp: number) {
   return `converted-images-${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}.pdf`;
 }
 
-export function Converter() {
+export interface ConverterProps {
+  /** Page headline (the page's only h1). */
+  title: string;
+  intro: string;
+  /** Per-page defaults, e.g. lossless quality on the PNG page. */
+  initialSettings?: Partial<Settings>;
+}
+
+export function Converter({ title, intro, initialSettings }: ConverterProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const toastSeq = useRef(0);
   const notify = useCallback((n: Notice) => {
@@ -50,7 +59,7 @@ export function Converter() {
   }, []);
   const dismiss = useCallback((id: number) => setToasts((t) => t.filter((x) => x.id !== id)), []);
 
-  const c = useConverter(notify);
+  const c = useConverter(notify, initialSettings);
   const { items, settings, phase, progress, result } = c.state;
   const inputRef = useRef<HTMLInputElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -149,10 +158,10 @@ export function Converter() {
       {/* Hero */}
       <div className="max-w-2xl">
         <h1 className="text-[2.125rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-5xl">
-          Convert Images to PDF in Seconds
+          {title}
         </h1>
         <p className="mt-4 max-w-xl text-[17px] leading-relaxed text-graphite sm:text-lg">
-          Turn JPG, PNG, WEBP and other image files into a single PDF. Fast, simple and secure — with no file storage.
+          {intro}
         </p>
         <div className="mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
           <button

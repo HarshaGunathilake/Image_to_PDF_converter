@@ -4,9 +4,9 @@
  */
 export const site = {
   name: "Pagefold",
-  tagline: "Image to PDF",
+  tagline: "Free PNG to PDF Converter",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://pagefold.app").replace(/\/$/, ""),
-  title: "Image to PDF Converter – Convert JPG, PNG & WEBP to PDF",
+  title: "Free PNG to PDF Converter Online",
   description:
     "Convert images to PDF online for free. Upload JPG, PNG or WEBP images, arrange them, and create a PDF in seconds. Secure, fast and no file storage.",
   keywords: [

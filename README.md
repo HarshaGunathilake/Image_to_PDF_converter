@@ -27,6 +27,15 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 The brand name, title and description live in `lib/site.ts` — change them there and everything (metadata, OG image, JSON-LD, UI) follows.
 
+## Pages
+
+| Route | Title | Notes |
+|-------|-------|-------|
+| `/` | Image to PDF Converter – Convert JPG, PNG & WEBP to PDF | All formats |
+| `/png-to-pdf` | Free PNG to PDF Converter Online | PNG-focused copy and FAQ; defaults to **Maximum** quality so PNGs are embedded losslessly |
+
+Each page is a thin wrapper around `components/LandingPage.tsx` with its own metadata, canonical URL, Open Graph image, FAQ and structured data. To add another format page (e.g. `/jpg-to-pdf`), copy `app/png-to-pdf/`, adjust the copy, add a FAQ list in `lib/content.ts`, and add the route to `app/sitemap.ts`.
+
 ## Features
 
 - Multi-image upload: file picker, drag & drop anywhere on the page, or paste from the clipboard

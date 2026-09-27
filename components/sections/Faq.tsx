@@ -1,17 +1,17 @@
 import { Plus } from "lucide-react";
-import { FAQ } from "@/lib/content";
+import type { FaqItem } from "@/lib/content";
 
-export function Faq() {
+export function Faq({ items, intro }: { items: FaqItem[]; intro: string }) {
   return (
     <section id="faq" aria-labelledby="faq-title" className="scroll-mt-20 grid gap-8 lg:grid-cols-[280px_1fr] lg:gap-16">
       <div>
         <h2 id="faq-title" className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           FAQ
         </h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-graphite">Quick answers about converting images to PDF.</p>
+        <p className="mt-3 text-[15px] leading-relaxed text-graphite">{intro}</p>
       </div>
       <div className="divide-y divide-rule border-y border-rule">
-        {FAQ.map(({ q, a }) => (
+        {items.map(({ q, a }) => (
           <details key={q} className="group">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-[16px] font-medium text-ink [&::-webkit-details-marker]:hidden">
               <h3>{q}</h3>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/lib/site";
 import { Logo } from "../Logo";
 
@@ -14,9 +15,14 @@ export function SiteFooter() {
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-graphite">
             <li>
-              <a className="hover:text-ink" href="#converter">
+              <Link className="hover:text-ink" href="/">
                 Image to PDF
-              </a>
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-ink" href="/png-to-pdf">
+                PNG to PDF
+              </Link>
             </li>
             <li>
               <a className="hover:text-ink" href="#features">

@@ -118,10 +118,10 @@ export interface Notice {
   files?: string[];
 }
 
-export function useConverter(onNotice: (notice: Notice) => void) {
+export function useConverter(onNotice: (notice: Notice) => void, initialSettings?: Partial<PdfSettings>) {
   const [state, dispatch] = useReducer(reducer, {
     items: [],
-    settings: DEFAULT_SETTINGS,
+    settings: { ...DEFAULT_SETTINGS, ...initialSettings },
     phase: "edit",
     progress: null,
     result: null,

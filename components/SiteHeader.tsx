@@ -2,19 +2,22 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
-  { href: "#converter", label: "Image to PDF" },
+  { href: "/", label: "Image to PDF" },
+  { href: "/png-to-pdf", label: "PNG to PDF" },
   { href: "#features", label: "Features" },
   { href: "#how-it-works", label: "How It Works" },
   { href: "#faq", label: "FAQ" },
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -52,12 +55,13 @@ export function SiteHeader() {
           <ul className="flex items-center gap-1">
             {NAV.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-graphite transition-colors hover:bg-surface hover:text-ink"
+                  aria-current={item.href === pathname ? "page" : undefined}
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-graphite transition-colors hover:bg-surface hover:text-ink aria-[current=page]:text-ink"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -87,13 +91,14 @@ export function SiteHeader() {
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-lg px-2 py-3 text-[15px] font-medium text-ink hover:bg-surface"
+                  aria-current={item.href === pathname ? "page" : undefined}
+                  className="block rounded-lg px-2 py-3 text-[15px] font-medium text-ink hover:bg-surface aria-[current=page]:text-teal"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

@@ -114,9 +114,13 @@ test.describe("desktop", () => {
     // Keyboard reorder: move the first page one step right.
     const handle = page.getByRole("button", { name: /^Reorder a-landscape\.jpg/ });
     await handle.focus();
+    // Human-speed key presses: dnd-kit measures layout between steps.
     await page.keyboard.press("Space");
+    await page.waitForTimeout(150);
     await page.keyboard.press("ArrowRight");
+    await page.waitForTimeout(150);
     await page.keyboard.press("Space");
+    await page.waitForTimeout(400);
     await expect.poll(() => cardNames(page)).toEqual(["b-portrait.png", "a-landscape.jpg", "c-square.webp", "d-rotated.jpg"]);
 
     // Pointer drag: last page to the front.
@@ -126,8 +130,11 @@ test.describe("desktop", () => {
     await page.mouse.down();
     await page.mouse.move(from!.x - 20, from!.y, { steps: 5 });
     await page.mouse.move(to!.x + 20, to!.y + to!.height / 2, { steps: 15 });
+    await page.waitForTimeout(100);
     await page.mouse.up();
     await expect.poll(() => cardNames(page)).toEqual(["d-rotated.jpg", "b-portrait.png", "a-landscape.jpg", "c-square.webp"]);
+    // Let the drop animation settle before the next interaction.
+    await page.waitForTimeout(400);
 
     // Button-based move (accessible alternative).
     await page.getByRole("button", { name: "Move c-square.webp earlier" }).focus();
