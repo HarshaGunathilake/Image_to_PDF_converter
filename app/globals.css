@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Palette
+  desk     – page background, a cool slate so white "paper" reads as paper
+  surface  – panels
+  ink      – primary text (blue-black)
+  graphite – secondary text
+  rule     – borders
+  teal     – the single action colour
+*/
+:root {
+  --desk: #eef1f4;
+  --surface: #ffffff;
+  --surface-2: #f6f8fa;
+  --ink: #16202b;
+  --graphite: #56616e;
+  --rule: #d9dfe5;
+  --rule-strong: #c3ccd5;
+  --teal: #0e6e63;
+  --teal-hover: #0a5a51;
+  --teal-soft: #dcefea;
+  --on-teal: #ffffff;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --paper-shadow: 0 1px 2px rgb(22 32 43 / 0.08), 0 4px 12px -2px rgb(22 32 43 / 0.1);
+  --panel-shadow: 0 1px 2px rgb(22 32 43 / 0.04), 0 12px 32px -12px rgb(22 32 43 / 0.12);
+  color-scheme: light;
+}
+
+.dark {
+  --desk: #0f1418;
+  --surface: #161d23;
+  --surface-2: #1b232a;
+  --ink: #e6ebef;
+  --graphite: #9aa6b2;
+  --rule: #27313a;
+  --rule-strong: #35414c;
+  --teal: #4cc3ae;
+  --teal-hover: #6fd3c1;
+  --teal-soft: #15332f;
+  --on-teal: #062521;
+  --danger: #ff8a80;
+  --danger-soft: #3a1c1a;
+  --paper-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 16px -4px rgb(0 0 0 / 0.5);
+  --panel-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -16px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-desk: var(--desk);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-teal: var(--teal);
+  --color-teal-hover: var(--teal-hover);
+  --color-teal-soft: var(--teal-soft);
+  --color-on-teal: var(--on-teal);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --shadow-paper: var(--paper-shadow);
+  --shadow-panel: var(--panel-shadow);
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum" 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--teal-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Visually hidden but available to assistive tech */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* The upload tray's dashed border, drawn with SVG so the dash rhythm is even at any size */
+.tray-border {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%238A97A5' stroke-width='1.5' stroke-dasharray='7%2c 7' stroke-linecap='round'/%3e%3c/svg%3e");
+}
+.tray-border[data-active="true"] {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%230E6E63' stroke-width='2' stroke-dasharray='7%2c 7' stroke-linecap='round'/%3e%3c/svg%3e");
+}
+
+.dark .tray-border[data-active="true"] {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%234CC3AE' stroke-width='2' stroke-dasharray='7%2c 7' stroke-linecap='round'/%3e%3c/svg%3e");
+}
+
+/* Progress bar sheen while indeterminate */
+@keyframes sheet-feed {
+  0% { transform: translateY(6px); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-6px); opacity: 0; }
+}
+.sheet-feed {
+  animation: sheet-feed 1.1s ease-in-out infinite;
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.pop-in {
+  animation: pop-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in 200ms ease-out;
+}
+
+dialog::backdrop {
+  background: rgb(10 14 18 / 0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
